@@ -6,6 +6,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
@@ -24,11 +25,13 @@ import javax.sql.DataSource
 class PMSDBConfig {
 
     @Bean(name = ["pmsDataSource"])
-    @ConfigurationProperties("datasource.pms")
+    @Primary
+    @ConfigurationProperties("spring.datasource")
     fun dataSource(): DataSource {
         return DataSourceBuilder.create().build()
     }
 
+    @Primary
     @Bean(name = ["pmsEntityManagerFactory"])
     fun localContainerEntityManagerFactoryBean(
         builder: EntityManagerFactoryBuilder,
@@ -41,10 +44,10 @@ class PMSDBConfig {
             .build()
     }
 
+    @Primary
     @Bean(name = ["pmsTransactionManager"])
     fun dmsTransactionManager(
-        @Qualifier("pmsEntityManagerFactory")
-        entityManagerFactory: EntityManagerFactory
+        @Qualifier("pmsEntityManagerFactory") entityManagerFactory: EntityManagerFactory
     ): PlatformTransactionManager {
         return JpaTransactionManager(entityManagerFactory)
     }

@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    jdbc-url: ${DB_PMS_URL}
+    username: ${DB_PMS_USERNAME}
+    password: ${DB_PMS_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+datasource:
+  dms:
+    jdbc-url: ${DB_DMS_URL}
+    username: ${DB_DMS_USERNAME}
+    password: ${DB_DMS_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
