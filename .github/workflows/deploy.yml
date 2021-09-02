@@ -22,7 +22,7 @@ jobs:
         run: chmod +x gradlew
         
       - name: gradle build
-        run: ./gradlew build
+        run: ./gradlew build --exclude-task test
         
       - name: build docker image
         run: docker build -t smoothbear/dms-pms-v2-1 .
