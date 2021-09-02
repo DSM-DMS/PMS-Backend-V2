@@ -21,13 +21,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         
-      - name: gradle build
+      - name: Gradle build
         run: ./gradlew build --exclude-task test
         
-      - name: build docker image
+      - name: Build docker image
         run: docker build -t smoothbear/dms-pms-v2-1 .
 
-      - name: publish to Registry
+      - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: smoothbear/dms-pms-v2-1
