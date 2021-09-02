@@ -9,7 +9,12 @@ spring:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD}
-
+  
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+  
 datasource:
   dms:
     jdbc-url: ${DB_DMS_URL}
