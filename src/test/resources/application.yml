@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    jdbc-url: jdbc:h2:mem:testdb1
+    driver-class-name: org.h2.Driver
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD}
+
+datasource:
+  dms:
+    jdbc-url: jdbc:h2:mem:testdb2
+    driver-class-name: org.h2.Driver
