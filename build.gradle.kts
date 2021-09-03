@@ -32,6 +32,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.h2database:h2")
     testImplementation("org.spockframework:spock-core:$spockVersion")
     testImplementation("org.spockframework:spock-spring:$spockVersion")
     testRuntimeOnly("org.codehaus.groovy:groovy:3.0.8")
