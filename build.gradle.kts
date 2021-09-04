@@ -20,9 +20,11 @@ repositories {
 val spockVersion = "2.0-groovy-3.0"
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("org.springframework.boot:spring-boot-starter-validation:2.5.4")
     implementation("io.github.microutils:kotlin-logging:2.0.11")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -37,6 +39,8 @@ dependencies {
     testImplementation("org.spockframework:spock-spring:$spockVersion")
     testRuntimeOnly("org.codehaus.groovy:groovy:3.0.8")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
