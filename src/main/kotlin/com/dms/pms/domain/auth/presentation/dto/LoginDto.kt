@@ -17,6 +17,7 @@ class LoginDto {
     )
 
     class Response (
-
+        val accessToken: String,
+        val refreshToken: String
     )
 }
