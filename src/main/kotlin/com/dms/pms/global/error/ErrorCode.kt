@@ -13,5 +13,10 @@ enum class ErrorCode (
     USER_ALREADY_EXIST(409, "User is already exist"),
 
     // Auth error codes
-    PASSWORD_NOT_MATCHED(401, "Password is not matched")
+    EXPIRED_TOKEN(401, "Token is expired"),
+    INVALID_TOKEN(401, "token is not valid"),
+    PASSWORD_NOT_MATCHED(401, "Password is not matched"),
+
+    // Server Error
+    INTERNAL_SERVER_ERROR(500, "Something went wrong")
 }

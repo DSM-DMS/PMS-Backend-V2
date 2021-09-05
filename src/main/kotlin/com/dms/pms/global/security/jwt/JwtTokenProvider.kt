@@ -1,17 +1,52 @@
 package com.dms.pms.global.security.jwt
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwts
+import com.dms.pms.domain.auth.exception.ExpiredTokenException
+import com.dms.pms.domain.auth.exception.InvalidTokenException
+import com.dms.pms.domain.user.domain.User
+import com.dms.pms.global.error.exception.InternalErrorException
+import com.dms.pms.global.security.AuthDetailsService
+import io.jsonwebtoken.*
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 @Component
 class JwtTokenProvider (
+    private val authDetailsService: AuthDetailsService,
     private val jwtProperties: JwtProperties
 ) {
 
-    val HEADER = "Authorization"
-    val PREFIX = "Bearer"
+    companion object {
+        private const val HEADER = "Authorization"
+        private const val PREFIX = "Bearer"
+    }
+
+    fun generateAccessToken(user: User): String {
+        return Jwts.builder()
+            .setIssuedAt(Date())
+            .setSubject(user.email)
+            .setExpiration(
+                Date(System.currentTimeMillis() + jwtProperties.accessExp * 1000)
+            )
+            .claim("type", "access_token")
+            .claim("role", user.roleType)
+            .signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
+            .compact()
+    }
+
+    fun generateRefreshToken(user: User): String {
+        return Jwts.builder()
+            .setIssuedAt(Date())
+            .setSubject(user.email)
+            .setExpiration(
+                Date(System.currentTimeMillis() + jwtProperties.refreshExp * 1000)
+            )
+            .claim("type", "refresh_token")
+            .signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
+            .compact()
+    }
 
     fun resolveToken(request: HttpServletRequest): String? {
         val bearer = request.getHeader(HEADER)
@@ -22,13 +57,29 @@ class JwtTokenProvider (
         return null
     }
 
-    fun validateToken(): Boolean {
-
+    fun validateToken(token: String?): Boolean {
+        return token?.let { it -> parseTokenBody(it).expiration.after(Date()) } ?: false
     }
 
-    fun parseTokenBody(): Claims {
-        try {
-            return Jwts.parser().setSigningKey()
+    fun getAuthentication(token: String): Authentication {
+        val userDetails = authDetailsService.loadUserByUsername(getTokenSubject(token))
+
+        return UsernamePasswordAuthenticationToken(userDetails, userDetails.authorities)
+    }
+
+    private fun parseTokenBody(token: String): Claims {
+        return try {
+            Jwts.parser().setSigningKey(jwtProperties.secretKey)
+                .parseClaimsJws(token).body
+        } catch (e: Exception) {
+            when (e) {
+                is ExpiredJwtException -> throw ExpiredTokenException()
+                is SignatureException, is MalformedJwtException -> throw InvalidTokenException()
+                else -> throw InternalErrorException()
+            }
         }
     }
+
+    private fun getTokenSubject(token: String) = parseTokenBody(token).subject
+
 }

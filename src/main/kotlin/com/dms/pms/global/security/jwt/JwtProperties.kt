@@ -2,11 +2,16 @@ package com.dms.pms.global.security.jwt
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
+import java.util.*
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "auth.jwt")
 data class JwtProperties (
-    val secretKey: String,
+    var secretKey: String,
     val accessExp: Long,
     val refreshExp: Long
-)
+) {
+    init {
+        this.secretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray())
+    }
+}
