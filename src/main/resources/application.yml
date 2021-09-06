@@ -21,3 +21,9 @@ datasource:
     username: ${DB_DMS_USERNAME}
     password: ${DB_DMS_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET}
+    access-exp: ${JWT_ACCESS_EXP}
+    refresh-exp: ${JWT_REFRESH_EXP}

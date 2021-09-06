@@ -9,4 +9,13 @@ class ErrorResponse (
             return ErrorResponse(status = code.status, message = code.message)
         }
     }
+
+    override fun toString(): String {
+        return """
+            {
+                "status": ${this.status},
+                "message": ${this.message}
+            }
+        """.trimIndent()
+    }
 }
