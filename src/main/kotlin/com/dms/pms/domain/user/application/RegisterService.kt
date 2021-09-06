@@ -6,11 +6,12 @@ import com.dms.pms.domain.user.domain.types.AuthProvider
 import com.dms.pms.domain.user.domain.types.RoleType
 import com.dms.pms.domain.user.exception.UserAlreadyExistException
 import com.dms.pms.domain.user.presentation.dto.RegisterDto
+import mu.KLogging
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class RegisterService (
+class RegisterService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
