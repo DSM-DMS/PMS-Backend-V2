@@ -28,6 +28,6 @@ class RegisterService(
             )
         }
 
-        throw UserAlreadyExistException()
+        throw UserAlreadyExistException.EXCEPTION
     }
 }

@@ -17,7 +17,7 @@ class LoginService (
         val user = userFacade.getUserByEmail(request.email)
 
         if (!passwordEncoder.matches(request.password, user.password)) {
-            throw PasswordNotMatchException()
+            throw PasswordNotMatchException.EXCEPTION
         }
 
         val accessToken = jwtTokenProvider.generateAccessToken(user)

@@ -11,7 +11,6 @@ import org.springframework.web.method.support.ModelAndViewContainer
 
 @Configuration
 class UserInformationResolver : HandlerMethodArgumentResolver {
-
     override fun resolveArgument(
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,

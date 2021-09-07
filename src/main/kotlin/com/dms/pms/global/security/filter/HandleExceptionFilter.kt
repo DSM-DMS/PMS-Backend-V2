@@ -21,7 +21,7 @@ class HandleExceptionFilter : OncePerRequestFilter() {
         } catch (e: Exception) {
             when (e) {
                 is BusinessException -> writeErrorCodes(e, response)
-                else -> writeErrorCodes(InternalErrorException(), response)
+                else -> writeErrorCodes(InternalErrorException.EXCEPTION, response)
             }
         }
     }

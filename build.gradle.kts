@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("com.amazonaws:aws-java-sdk-ses:1.11.227")
     implementation("org.springframework.boot:spring-boot-starter-validation:2.5.4")
     implementation("io.github.microutils:kotlin-logging:2.0.11")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -40,7 +41,7 @@ dependencies {
     testRuntimeOnly("org.codehaus.groovy:groovy:3.0.8")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    annotationProcessor("org.springframework.boot:spring-boot-con   figuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
