@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "aws.ses")
-class SesProperty (
-    val accessKeyId: String,
+class SESProperty (
+    val accessKey: String,
     val secretKey: String
 )

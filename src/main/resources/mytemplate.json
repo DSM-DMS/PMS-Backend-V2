@@ -1,0 +1,7 @@
+{
+  "Template": {
+    "TemplateName": "verify-email",
+    "SubjectPart": "PMS에 가입한 것을 환영합니다",
+    "HtmlPart": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>PMS에 가입한 것을 환영합니다.</title>\n</head>\n<body>\n    <p>안녕하세요, {{user_name}}님</p>\n    <p>아래의 링크로 회원가입을 완료하세요.</p>\n    <div>\n        <a href=\"{{verify_url}}\">\n            <div>회원가입 완료하기</div>\n        </a>\n    </div>\n</body>\n</html>"
+  }
+}
