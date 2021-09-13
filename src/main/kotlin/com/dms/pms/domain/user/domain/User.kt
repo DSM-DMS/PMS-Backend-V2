@@ -1,5 +1,7 @@
 package com.dms.pms.domain.user.domain
 
+import com.dms.pms.domain.student.domain.Student
+import com.dms.pms.domain.student.domain.StudentUser
 import com.dms.pms.domain.user.domain.types.AuthProvider
 import com.dms.pms.domain.user.domain.types.RoleType
 import javax.persistence.*
@@ -8,19 +10,46 @@ import javax.persistence.*
 @Table(name = "users")
 class User (
     @Id
-    val email: String,
+    var email: String,
 
     @Column
-    val password: String,
+    var password: String,
 
     @Column(nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
-    val roleType: RoleType,
+    var roleType: RoleType,
 
     @Column(name = "provider")
     @Enumerated(EnumType.STRING)
-    val provider: AuthProvider
-)
+    var provider: AuthProvider,
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    var students: MutableSet<StudentUser> = mutableSetOf()
+) {
+
+    fun addStudent(student: StudentUser) {
+        students.add(student)
+    }
+
+    fun changePassword(password: String) {
+        this.password = password
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as User
+
+        if (email != other.email) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return email.hashCode()
+    }
+}

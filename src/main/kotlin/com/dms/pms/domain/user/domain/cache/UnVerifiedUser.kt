@@ -1,10 +1,10 @@
-package com.dms.pms.domain.user.cache
+package com.dms.pms.domain.user.domain.cache
 
+import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
-import javax.persistence.Id
 
 // Live for 30 minutes
-@RedisHash(value = "UnVerifiedUser", timeToLive = 30 * 1000 * 60)
+@RedisHash(value = "UnVerifiedUser", timeToLive = 60 * 30)
 class UnVerifiedUser (
     @Id
     val verifyToken: String,

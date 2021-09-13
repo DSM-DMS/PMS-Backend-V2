@@ -60,10 +60,6 @@ class JwtTokenProvider (
     fun getAuthentication(token: String?): Authentication? {
         return token?.let { it ->
             val claims = parseTokenBody(it)
-            if (!claims.expiration.after(Date())) {
-                return null
-            }
-
             val userDetails = authDetailsService.loadUserByUsername(claims.subject)
 
             return UsernamePasswordAuthenticationToken(userDetails, userDetails.authorities)

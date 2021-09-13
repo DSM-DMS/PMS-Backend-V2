@@ -1,4 +1,4 @@
-package com.dms.pms.infrastructure.ses
+package com.dms.pms.infrastructure.ses.config
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials

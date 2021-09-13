@@ -1,4 +1,4 @@
-package com.dms.pms.infrastructure.ses
+package com.dms.pms.infrastructure.ses.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding

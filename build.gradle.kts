@@ -6,7 +6,9 @@ plugins {
     kotlin("jvm") version "1.5.21"
     kotlin("plugin.spring") version "1.5.21"
     kotlin("plugin.jpa") version "1.5.21"
+    kotlin("kapt") version "1.3.61"
     groovy
+    idea
 }
 
 group = "com.dms"
@@ -17,6 +19,7 @@ repositories {
     mavenCentral()
 }
 
+val springCloudVersion = "Hoxton.SR12"
 val spockVersion = "2.0-groovy-3.0"
 
 dependencies {
@@ -24,6 +27,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.querydsl:querydsl-jpa")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.amazonaws:aws-java-sdk-ses:1.11.227")
     implementation("org.springframework.boot:spring-boot-starter-validation:2.5.4")
@@ -31,6 +35,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.amazonaws:aws-java-sdk-ses:1.12.3")
     runtimeOnly("mysql:mysql-connector-java:8.0.26")
     runtimeOnly("org.postgresql:postgresql")
 
@@ -41,7 +46,8 @@ dependencies {
     testRuntimeOnly("org.codehaus.groovy:groovy:3.0.8")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 
-    annotationProcessor("org.springframework.boot:spring-boot-con   figuration-processor")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
@@ -57,4 +63,12 @@ tasks.getByName<Jar>("jar") {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
+    }
 }

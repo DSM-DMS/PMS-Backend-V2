@@ -14,7 +14,7 @@ class ErrorResponse (
         return """
             {
                 "status": ${this.status},
-                "message": ${this.message}
+                "message": "${this.message}"
             }
         """.trimIndent()
     }

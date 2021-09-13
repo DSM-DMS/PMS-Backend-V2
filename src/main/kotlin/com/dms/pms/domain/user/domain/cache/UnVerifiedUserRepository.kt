@@ -1,4 +1,4 @@
-package com.dms.pms.domain.user.cache
+package com.dms.pms.domain.user.domain.cache
 
 import org.springframework.data.repository.CrudRepository
 
