@@ -27,6 +27,7 @@ class RegisterService(
 
     @Value("\${domain.http-name}") private val domainName: String
 ) {
+
     fun register(request: RegisterDto.Request) {
         if (userRepository.findByEmail(request.email) != null) {
             throw UserAlreadyExistException.EXCEPTION
