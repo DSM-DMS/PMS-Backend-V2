@@ -18,4 +18,19 @@ class StudentUser (
     @MapsId(value = "student_code")
     @JoinColumn(name = "student_code")
     var student: Student
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as StudentUser
+
+        if (studentUserKey != other.studentUserKey) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return studentUserKey.hashCode()
+    }
+}
