@@ -20,7 +20,7 @@ import javax.sql.DataSource
 @EnableJpaRepositories(
     entityManagerFactoryRef = "pmsEntityManagerFactory",
     transactionManagerRef = "pmsTransactionManager",
-    basePackages = ["com.dms.pms.domain.meal", "com.dms.pms.domain.outing", "com.dms.pms.domain.student", "com.dms.pms.domain.user"]
+    basePackages = ["com.dms.pms.domain.outing", "com.dms.pms.domain.student", "com.dms.pms.domain.user"]
 )
 class PMSDBConfig {
 
@@ -39,7 +39,7 @@ class PMSDBConfig {
     ): LocalContainerEntityManagerFactoryBean {
         return builder
             .dataSource(dataSource)
-            .packages("com.dms.pms.domain.meal", "com.dms.pms.domain.outing", "com.dms.pms.domain.student", "com.dms.pms.domain.user")
+            .packages("com.dms.pms.domain.outing", "com.dms.pms.domain.student", "com.dms.pms.domain.user")
             .persistenceUnit("dms")
             .build()
     }
