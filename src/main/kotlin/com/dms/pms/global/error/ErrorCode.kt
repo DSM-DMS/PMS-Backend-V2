@@ -21,6 +21,9 @@ enum class ErrorCode (
     // Student error codes
     STUDENT_NOT_FOUND(404, "Student is not found"),
 
+    // Stay status not found
+    STAY_STATUS_NOT_FOUND(404, "Stay status is not found"),
+
     // Path not found
     PATH_NOT_FOUND(404, "404: Not found"),
 
