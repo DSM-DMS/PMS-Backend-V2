@@ -18,7 +18,7 @@ import javax.sql.DataSource
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    entityManagerFactoryRef = "pmsEntityManager",
+    entityManagerFactoryRef = "pmsEntityManagerFactory",
     transactionManagerRef = "pmsTransactionManager",
     basePackages = ["com.dms.pms.domain.meal", "com.dms.pms.domain.outing", "com.dms.pms.domain.student", "com.dms.pms.domain.user"]
 )

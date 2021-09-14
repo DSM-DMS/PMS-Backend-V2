@@ -1,4 +1,8 @@
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+    dispatch-options-request: false
+
   datasource:
     jdbc-url: ${DB_PMS_URL}
     username: ${DB_PMS_USERNAME}
@@ -13,8 +17,9 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: validate
-  
+      ddl-auto: update
+    show-sql: true
+
 datasource:
   dms:
     jdbc-url: ${DB_DMS_URL}
@@ -27,3 +32,12 @@ auth:
     secret-key: ${JWT_SECRET}
     access-exp: ${JWT_ACCESS_EXP}
     refresh-exp: ${JWT_REFRESH_EXP}
+
+aws:
+  ses:
+    sender: ${AWS_SES_SENDER}
+    access-key: ${AWS_SES_ACCESS_KEY}
+    secret-key: ${AWS_SES_SECRET_KEY}
+
+domain:
+  http-name: ${DOMAIN_NAME}

@@ -1,7 +1,7 @@
 package com.dms.pms.global.security
 
 import com.dms.pms.domain.user.domain.types.RoleType
-import com.dms.pms.global.security.filter.HandleExceptionFilter
+import com.dms.pms.global.error.HandleExceptionFilter
 import com.dms.pms.global.security.filter.JwtTokenFilter
 import com.dms.pms.global.security.filter.SecurityFilterConfigure
 import org.springframework.context.annotation.Bean
@@ -35,6 +35,7 @@ class SecurityConfig (
             .antMatchers("/auth").permitAll()
             .antMatchers(HttpMethod.GET, "/user").hasAuthority(RoleType.USER.toString())
             .antMatchers(HttpMethod.POST, "/user").permitAll()
+            .antMatchers(HttpMethod.GET, "/user/verify").permitAll()
             .antMatchers(HttpMethod.POST, "/student/**").hasAuthority(RoleType.ADMIN.toString())
             .antMatchers("/user/student").hasAuthority(RoleType.USER.toString())
             .antMatchers("/auth/**").permitAll()

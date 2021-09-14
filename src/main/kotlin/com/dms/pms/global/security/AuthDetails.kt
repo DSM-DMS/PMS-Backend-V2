@@ -1,7 +1,6 @@
 package com.dms.pms.global.security
 
 import com.dms.pms.domain.user.domain.User
-import com.dms.pms.domain.user.domain.types.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

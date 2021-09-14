@@ -1,6 +1,5 @@
-package com.dms.pms.global.security.filter
+package com.dms.pms.global.security
 
-import com.dms.pms.global.security.UserInfo
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.MethodParameter
 import org.springframework.security.core.context.SecurityContextHolder
@@ -11,6 +10,11 @@ import org.springframework.web.method.support.ModelAndViewContainer
 
 @Configuration
 class UserInformationResolver : HandlerMethodArgumentResolver {
+
+    override fun supportsParameter(parameter: MethodParameter): Boolean {
+        return parameter.hasParameterAnnotation(UserInfo::class.java)
+    }
+
     override fun resolveArgument(
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,
@@ -18,7 +22,4 @@ class UserInformationResolver : HandlerMethodArgumentResolver {
         binderFactory: WebDataBinderFactory?
     ): String = SecurityContextHolder.getContext().authentication.name
 
-    override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(UserInfo::class.java)
-    }
 }

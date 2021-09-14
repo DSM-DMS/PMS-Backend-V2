@@ -1,7 +1,7 @@
 package com.dms.pms.global.security.jwt
 
-import com.dms.pms.domain.auth.exception.ExpiredTokenException
-import com.dms.pms.domain.auth.exception.InvalidTokenException
+import com.dms.pms.global.security.exception.ExpiredTokenException
+import com.dms.pms.global.security.exception.InvalidTokenException
 import com.dms.pms.domain.user.domain.User
 import com.dms.pms.global.error.exception.InternalErrorException
 import com.dms.pms.global.security.AuthDetailsService
@@ -57,14 +57,13 @@ class JwtTokenProvider (
         return null
     }
 
-    fun validateToken(token: String?): Boolean {
-        return token?.let { it -> parseTokenBody(it).expiration.after(Date()) } ?: false
-    }
+    fun getAuthentication(token: String?): Authentication? {
+        return token?.let { it ->
+            val claims = parseTokenBody(it)
+            val userDetails = authDetailsService.loadUserByUsername(claims.subject)
 
-    fun getAuthentication(token: String): Authentication {
-        val userDetails = authDetailsService.loadUserByUsername(getTokenSubject(token))
-
-        return UsernamePasswordAuthenticationToken(userDetails, userDetails.authorities)
+            return UsernamePasswordAuthenticationToken(userDetails, userDetails.authorities)
+        }
     }
 
     private fun parseTokenBody(token: String): Claims {
@@ -73,13 +72,10 @@ class JwtTokenProvider (
                 .parseClaimsJws(token).body
         } catch (e: Exception) {
             when (e) {
-                is ExpiredJwtException -> throw ExpiredTokenException()
-                is SignatureException, is MalformedJwtException -> throw InvalidTokenException()
-                else -> throw InternalErrorException()
+                is ExpiredJwtException -> throw ExpiredTokenException.EXCEPTION
+                is SignatureException, is MalformedJwtException -> throw InvalidTokenException.EXCEPTION
+                else -> throw InternalErrorException.EXCEPTION
             }
         }
     }
-
-    private fun getTokenSubject(token: String) = parseTokenBody(token).subject
-
 }
