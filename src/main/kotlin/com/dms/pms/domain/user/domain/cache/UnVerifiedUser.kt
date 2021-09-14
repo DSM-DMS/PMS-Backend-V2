@@ -7,9 +7,9 @@ import org.springframework.data.redis.core.RedisHash
 @RedisHash(value = "UnVerifiedUser", timeToLive = 60 * 30)
 class UnVerifiedUser (
     @Id
-    val verifyToken: String,
+    var verifyToken: String,
 
-    val email: String,
-    val password: String,
-    val name: String
+    var email: String,
+    var password: String,
+    var name: String
 )

@@ -6,6 +6,7 @@ import com.dms.pms.domain.student.domain.repository.StudentUserRepository
 import com.dms.pms.domain.student.domain.types.StudentUserKey
 import com.dms.pms.domain.student.exception.StudentNotFoundException
 import com.dms.pms.domain.student.presentation.dto.AddStudentDto
+import com.dms.pms.domain.student.presentation.dto.DeleteStudentDto
 import com.dms.pms.domain.user.`interface`.UserFacade
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -15,7 +16,7 @@ import javax.transaction.Transactional
 class StudentService(
     private val userFacade: UserFacade,
     private val studentRepository: StudentRepository,
-    private val studentUserRepository: StudentUserRepository
+    private val studentUserRepository: StudentUserRepository,
 ) {
 
     @Transactional
@@ -35,5 +36,14 @@ class StudentService(
         student.addUser(studentUser)
 
         return AddStudentDto.Response("student addition is success.")
+    }
+
+    fun deleteStudent(request: DeleteStudentDto.Request, email: String): DeleteStudentDto.Response {
+        if (!studentRepository.existsStudent(email, request.number))
+            throw StudentNotFoundException.EXCEPTION
+
+        studentRepository.deleteStudent(email, request.number)
+
+        return DeleteStudentDto.Response("student is successfully deleted.")
     }
 }
