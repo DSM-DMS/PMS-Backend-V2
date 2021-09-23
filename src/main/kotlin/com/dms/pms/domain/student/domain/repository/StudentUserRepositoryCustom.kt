@@ -1,6 +1,6 @@
 package com.dms.pms.domain.student.domain.repository
 
-interface StudentRepositoryCustom {
-    fun existsStudent(email: String, number: Long): Boolean
+interface StudentUserRepositoryCustom {
     fun deleteStudent(email: String, number: Long)
+    fun isUserHasStudent(email: String, number: Long): Boolean
 }

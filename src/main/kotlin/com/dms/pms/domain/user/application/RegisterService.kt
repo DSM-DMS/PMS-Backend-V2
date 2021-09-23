@@ -29,7 +29,7 @@ class RegisterService(
 ) {
 
     fun register(request: RegisterDto.Request) {
-        if (userRepository.findByEmail(request.email) != null) {
+        if (userRepository.findByIdOrNull(request.email) != null) {
             throw UserAlreadyExistException.EXCEPTION
         }
 

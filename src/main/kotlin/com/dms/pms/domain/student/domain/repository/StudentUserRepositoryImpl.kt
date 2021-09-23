@@ -3,11 +3,10 @@ package com.dms.pms.domain.student.domain.repository
 import com.dms.pms.domain.student.domain.QStudentUser.studentUser
 import com.dms.pms.domain.student.domain.StudentUser
 import com.dms.pms.domain.student.domain.types.StudentUserKey
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+import com.dms.pms.global.querydsl.PMSQueryDslRepositorySupport
 
-class StudentRepositoryImpl : QuerydslRepositorySupport(StudentUser::class.java), StudentRepositoryCustom {
-
-    override fun existsStudent(email: String, number: Long): Boolean {
+class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::class.java), StudentUserRepositoryCustom {
+    override fun isUserHasStudent(email: String, number: Long): Boolean {
         val studentUser = from(studentUser)
             .where(studentUser.studentUserKey.eq(StudentUserKey(email, number)))
             .fetchFirst()

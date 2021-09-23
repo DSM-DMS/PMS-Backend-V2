@@ -12,9 +12,12 @@ class Student (
     var name: String,
 
     @Column(name = "number", nullable = false, unique = true)
-    var studentNumber: String,
+    var studentNumber: Long,
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @Column(name = "student_id", nullable = false, unique = true)
+    val studentId: String,
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     var users: MutableSet<StudentUser> = mutableSetOf()
 ) {
 

@@ -3,13 +3,15 @@ package com.dms.pms.domain.student.presentation
 import com.dms.pms.domain.student.application.StudentService
 import com.dms.pms.domain.student.presentation.dto.AddStudentDto
 import com.dms.pms.domain.student.presentation.dto.DeleteStudentDto
+import com.dms.pms.domain.student.presentation.dto.StudentInfoDto
+import com.dms.pms.domain.user.domain.User
 import com.dms.pms.global.security.UserInfo
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/user")
-class StudentController(
+class StudentDelivery(
     private val studentService: StudentService
 ) {
     @PostMapping("/student")
@@ -23,7 +25,7 @@ class StudentController(
     }
 
     @GetMapping("/student/{number}")
-    fun getStudentInfo(@PathVariable("number") number: Long) {
-
+    fun getStudentInfo(@PathVariable("number") number: Long, @UserInfo email: String): StudentInfoDto.Response {
+        return studentService.getStudentInfo(number, email)
     }
 }

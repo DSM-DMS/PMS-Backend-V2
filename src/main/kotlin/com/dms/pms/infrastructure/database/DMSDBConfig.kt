@@ -19,7 +19,7 @@ import javax.sql.DataSource
 @EnableJpaRepositories(
     entityManagerFactoryRef = "dmsEntityManagerFactory",
     transactionManagerRef = "dmsTransactionManager",
-    basePackages = ["com.dms.pms.domain.meal", "com.dms.pms.domain.point", "com.dms.pms.domain.stay", "com.dms.pms.domain.student"]
+    basePackages = ["com.dms.pms.domain.meal", "com.dms.pms.domain.point", "com.dms.pms.domain.stay"]
 )
 class DMSDBConfig {
 
@@ -36,8 +36,8 @@ class DMSDBConfig {
     ): LocalContainerEntityManagerFactoryBean {
         return builder
             .dataSource(dataSource)
-            .packages("com.dms.pms.domain.meal", "com.dms.pms.domain.point", "com.dms.pms.domain.stay", "com.dms.pms.domain.student")
-            .persistenceUnit("dms")
+            .packages("com.dms.pms.domain.meal", "com.dms.pms.domain.point", "com.dms.pms.domain.stay")
+            .persistenceUnit("dmsEntityManager")
             .build()
     }
 
