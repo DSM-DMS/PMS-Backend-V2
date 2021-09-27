@@ -1,9 +1,6 @@
 package com.dms.pms.domain.point.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "point_item")
@@ -15,7 +12,7 @@ class PointItem (
     var reason: String,
 
     @Column(name = "point", length = 11)
-    var point: Long,
+    var point: Int,
 
     @Column(name = "type")
     var type: Boolean

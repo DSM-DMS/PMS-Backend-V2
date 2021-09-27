@@ -3,9 +3,10 @@ package com.dms.pms.domain.student.application
 import com.dms.pms.domain.meal.`interface`.MealFacade
 import com.dms.pms.domain.point.`interface`.PointFacade
 import com.dms.pms.domain.stay.`interface`.StayFacade
-import com.dms.pms.domain.student.domain.StudentUser
-import com.dms.pms.domain.student.domain.repository.StudentRepository
-import com.dms.pms.domain.student.domain.repository.StudentUserUserRepository
+import com.dms.pms.domain.student.domain.dms.repository.DMSStudentRepository
+import com.dms.pms.domain.student.domain.pms.StudentUser
+import com.dms.pms.domain.student.domain.pms.repository.StudentRepository
+import com.dms.pms.domain.student.domain.pms.repository.StudentUserRepository
 import com.dms.pms.domain.student.domain.types.StudentUserKey
 import com.dms.pms.domain.student.exception.StudentNotFoundException
 import com.dms.pms.domain.student.exception.UserHasNotStudentException
@@ -21,9 +22,8 @@ import javax.transaction.Transactional
 class StudentService(
     private val userFacade: UserFacade,
     private val studentRepository: StudentRepository,
-    private val studentUserRepository: StudentUserUserRepository,
-    private val pointFacade: PointFacade,
-    private val stayFacade: StayFacade,
+    private val studentUserRepository: StudentUserRepository,
+    private val dmsStudentRepository: DMSStudentRepository,
     private val mealFacade: MealFacade
 ) {
 
@@ -56,19 +56,21 @@ class StudentService(
     }
 
     fun getStudentInfo(number: Long, email: String): StudentInfoDto.Response {
+
         val student = studentRepository.findByStudentNumber(number)
             ?: throw StudentNotFoundException.EXCEPTION
 
         if (studentUserRepository.isUserHasStudent(email, number))
             throw UserHasNotStudentException.EXCEPTION
 
-        val point = pointFacade.getPointByStudentId(student.studentId)
+        val studentId = student.studentId
+        val dmsStudent = dmsStudentRepository.findByIdEager(studentId)
 
         return StudentInfoDto.Response(
-            bonusPoint = point.bonusPoint,
-            minusPoint = point.minusPoint,
-            stay = stayFacade.getStayValueByStudentId(student.studentId),
-            mealApply = mealFacade.getMealApplyStatus(student.studentId)
+            bonusPoint = dmsStudent.point.goodPoint,
+            minusPoint = dmsStudent.point.badPoint,
+            stay = dmsStudent.stay.value,
+            mealApply = mealFacade.getMealApplyStatus(studentId)
         )
     }
 }

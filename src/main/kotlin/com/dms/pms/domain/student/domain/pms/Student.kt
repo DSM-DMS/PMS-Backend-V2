@@ -1,4 +1,4 @@
-package com.dms.pms.domain.student.domain
+package com.dms.pms.domain.student.domain.pms
 
 import javax.persistence.*
 
@@ -18,7 +18,7 @@ class Student (
     val studentId: String,
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    var users: MutableSet<StudentUser> = mutableSetOf()
+    var users: MutableList<StudentUser> = mutableListOf()
 ) {
 
     fun addUser(user: StudentUser) {

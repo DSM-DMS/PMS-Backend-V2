@@ -65,6 +65,18 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+noArg {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+}
+
 idea {
     module {
         val kaptMain = file("build/generated/source/kapt/main")

@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext
 @Repository
 abstract class DMSQueryDslRepositorySupport(domainClass: Class<*>) : QuerydslRepositorySupport(domainClass) {
 
-    @PersistenceContext(name = "dmsEntityManager")
+    @PersistenceContext(unitName = "dmsEntityManager")
     override fun setEntityManager(entityManager: EntityManager) {
         super.setEntityManager(entityManager)
     }

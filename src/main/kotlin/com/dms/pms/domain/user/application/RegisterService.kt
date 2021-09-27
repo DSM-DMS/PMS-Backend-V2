@@ -8,7 +8,9 @@ import com.dms.pms.domain.user.domain.types.AuthProvider
 import com.dms.pms.domain.user.domain.types.RoleType
 import com.dms.pms.domain.user.exception.InvalidTokenUser
 import com.dms.pms.domain.user.exception.UserAlreadyExistException
+import com.dms.pms.domain.user.exception.UserNotFoundException
 import com.dms.pms.domain.user.presentation.dto.RegisterDto
+import com.dms.pms.domain.user.presentation.dto.StudentListDto
 import com.dms.pms.domain.user.presentation.dto.VerifyDto
 import com.dms.pms.infrastructure.ses.SESService
 import com.dms.pms.infrastructure.ses.SESTemplateType
@@ -29,6 +31,7 @@ class RegisterService(
 ) {
 
     fun register(request: RegisterDto.Request) {
+
         if (userRepository.findByIdOrNull(request.email) != null) {
             throw UserAlreadyExistException.EXCEPTION
         }
@@ -66,7 +69,7 @@ class RegisterService(
                 email = user.email,
                 password = user.password,
                 name = user.name,
-                roleType = RoleType.ADMIN,
+                roleType = RoleType.USER,
                 provider = AuthProvider.LOCAL
             )
         )

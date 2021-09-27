@@ -28,4 +28,5 @@ class StudentDelivery(
     fun getStudentInfo(@PathVariable("number") number: Long, @UserInfo email: String): StudentInfoDto.Response {
         return studentService.getStudentInfo(number, email)
     }
+
 }

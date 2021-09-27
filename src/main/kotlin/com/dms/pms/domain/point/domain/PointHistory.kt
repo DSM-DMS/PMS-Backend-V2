@@ -1,23 +1,26 @@
 package com.dms.pms.domain.point.domain
 
+import com.dms.pms.domain.student.domain.dms.Student
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Entity
 @Table(name = "point_history")
 class PointHistory (
     @Id @Column(name = "id", length = 11)
     var id: Long,
 
-    @Column(name = "student_id", length = 20)
-    var studentId: String,
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    var student: Student,
 
-    @Column(name = "point_id", length = 11)
-    var pointId: Long,
+    @ManyToOne
+    @JoinColumn(name = "point_id")
+    var pointItem: PointItem,
 
     @Column(name = "point_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

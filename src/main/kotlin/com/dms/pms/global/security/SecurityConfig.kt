@@ -13,15 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.servlet.config.annotation.CorsRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig (
     private val jwtTokenFilter: JwtTokenFilter,
     private val handleExceptionFilter: HandleExceptionFilter
-) : WebSecurityConfigurerAdapter(), WebMvcConfigurer {
+) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
@@ -38,16 +36,11 @@ class SecurityConfig (
             .antMatchers(HttpMethod.GET, "/user/verify").permitAll()
             .antMatchers(HttpMethod.POST, "/student/**").hasAuthority(RoleType.ADMIN.toString())
             .antMatchers("/user/student").hasAuthority(RoleType.USER.toString())
+            .antMatchers("/user/student/**").hasAuthority(RoleType.USER.toString())
             .antMatchers("/auth/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().denyAll()
             .and().apply(SecurityFilterConfigure(jwtTokenFilter, handleExceptionFilter))
-    }
-
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-            .allowedOrigins("*")
-            .allowedMethods("*")
     }
 
     @Bean

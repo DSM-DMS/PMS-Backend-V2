@@ -1,4 +1,4 @@
-package com.dms.pms.domain.student.domain
+package com.dms.pms.domain.student.domain.pms
 
 import com.dms.pms.domain.student.domain.types.StudentUserKey
 import com.dms.pms.domain.user.domain.User

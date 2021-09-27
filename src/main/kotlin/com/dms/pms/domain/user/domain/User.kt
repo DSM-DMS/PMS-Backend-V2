@@ -1,7 +1,6 @@
 package com.dms.pms.domain.user.domain
 
-import com.dms.pms.domain.student.domain.Student
-import com.dms.pms.domain.student.domain.StudentUser
+import com.dms.pms.domain.student.domain.pms.StudentUser
 import com.dms.pms.domain.user.domain.types.AuthProvider
 import com.dms.pms.domain.user.domain.types.RoleType
 import javax.persistence.*
@@ -27,7 +26,7 @@ class User (
     var provider: AuthProvider,
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    var students: MutableSet<StudentUser> = mutableSetOf()
+    var students: MutableList<StudentUser> = mutableListOf()
 ) {
 
     fun addStudent(student: StudentUser) {
