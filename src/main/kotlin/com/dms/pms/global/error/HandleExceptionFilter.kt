@@ -1,16 +1,14 @@
 package com.dms.pms.global.error
 
-import com.dms.pms.global.error.BusinessException
-import com.dms.pms.global.error.ErrorResponse
 import com.dms.pms.global.error.exception.InternalErrorException
 import com.dms.pms.global.error.exception.MethodArgumentException
 import com.dms.pms.global.error.exception.NotFoundException
-import mu.KLogger
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.NoHandlerFoundException
+import org.springframework.web.util.NestedServletException
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -29,8 +27,9 @@ class HandleExceptionFilter : OncePerRequestFilter() {
             filterChain.doFilter(request, response)
         } catch (e: Exception) {
 
-            val exception = e.cause ?: InternalErrorException.EXCEPTION
-            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by ${exception.message}")
+            val exception = if (e is NestedServletException) e.cause else e
+
+            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by $exception")
 
             when (exception) {
                 // BusinessException

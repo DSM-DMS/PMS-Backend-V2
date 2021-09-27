@@ -62,7 +62,7 @@ class JwtTokenProvider (
             val claims = parseTokenBody(it)
             val userDetails = authDetailsService.loadUserByUsername(claims.subject)
 
-            return UsernamePasswordAuthenticationToken(userDetails, userDetails.authorities)
+            return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
         }
     }
 

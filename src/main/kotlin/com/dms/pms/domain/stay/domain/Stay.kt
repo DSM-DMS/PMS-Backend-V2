@@ -1,15 +1,17 @@
 package com.dms.pms.domain.stay.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import com.dms.pms.domain.student.domain.dms.Student
+import javax.persistence.*
 
 @Entity
 @Table(name = "stay_apply")
 class Stay (
     @Id @Column(name = "student_id", length = 20)
     var studentId: String,
+
+    @OneToOne
+    @JoinColumn(name = "student_id")
+    var student: Student,
 
     @Column(name = "value", length = 11)
     var value: Long
