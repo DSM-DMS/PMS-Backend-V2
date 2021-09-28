@@ -10,13 +10,11 @@ class PointService (
     private val pointHistoryRepository: PointHistoryRepository,
     private val studentFacade: StudentFacade
 ) {
-
     fun getStudentPointHistory(number: Long, email: String): StudentPointDto.Response {
-        studentFacade.checkIsUserHasStudent(email, number)
-        val studentId = studentFacade.findStudentIdByNumber(number)
 
-        val points = pointHistoryRepository.findAllByStudentId(email)
+        val studentId = studentFacade.checkIsUserHasStudentAndGetId(email, number)
+        val pointHistories = pointHistoryRepository.getPointHistoriesWithItem(studentId)
 
-        return StudentPointDto.Response(listOf())
+        return StudentPointDto.Response(pointHistories)
     }
 }

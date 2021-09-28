@@ -1,11 +1,10 @@
 package com.dms.pms.domain.auth.presentation
 
 import com.dms.pms.domain.auth.application.LoginService
+import com.dms.pms.domain.auth.presentation.dto.ChangePasswordDto
 import com.dms.pms.domain.auth.presentation.dto.LoginDto
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.dms.pms.global.security.UserInfo
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
@@ -15,4 +14,9 @@ class AuthDelivery (
 ) {
     @PostMapping
     fun login(@RequestBody @Valid request: LoginDto.Request): LoginDto.Response = loginService.login(request)
+
+    @PutMapping("/password")
+    fun changePassword(@RequestBody @Valid request: ChangePasswordDto.Request, @UserInfo email: String) {
+        loginService.changePassword(request, email)
+    }
 }

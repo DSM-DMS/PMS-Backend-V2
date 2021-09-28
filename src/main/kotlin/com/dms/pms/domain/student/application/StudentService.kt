@@ -60,7 +60,7 @@ class StudentService(
         val student = studentRepository.findByStudentNumber(number)
             ?: throw StudentNotFoundException.EXCEPTION
 
-        if (studentUserRepository.isUserHasStudent(email, number))
+        if (!studentUserRepository.isUserHasStudent(email, student.studentCode))
             throw UserHasNotStudentException.EXCEPTION
 
         val studentId = student.studentId

@@ -3,6 +3,7 @@ package com.dms.pms.global.error
 import com.dms.pms.global.error.exception.InternalErrorException
 import com.dms.pms.global.error.exception.MethodArgumentException
 import com.dms.pms.global.error.exception.NotFoundException
+import mu.KLogging
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.filter.OncePerRequestFilter
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class HandleExceptionFilter : OncePerRequestFilter() {
 
-    companion object KLogger
+    companion object: KLogging()
 
     override fun doFilterInternal(
         request: HttpServletRequest,

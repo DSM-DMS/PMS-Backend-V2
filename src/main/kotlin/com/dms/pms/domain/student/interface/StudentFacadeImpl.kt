@@ -24,9 +24,13 @@ class StudentFacadeImpl (
         return studentUserRepository.findAllStudentsByEmail(email)
     }
 
-    override fun checkIsUserHasStudent(email: String, number: Long) {
-        if (!studentUserRepository.isUserHasStudent(email, number))
-            throw UserHasNotStudentException.EXCEPTION
-    }
+    override fun checkIsUserHasStudentAndGetId(email: String, number: Long): String {
+        val student = studentRepository.findByStudentNumber(number)
+            ?: throw StudentNotFoundException.EXCEPTION
 
+        if (!studentUserRepository.isUserHasStudent(email, student.studentCode))
+            throw UserHasNotStudentException.EXCEPTION
+
+        return student.studentId
+    }
 }

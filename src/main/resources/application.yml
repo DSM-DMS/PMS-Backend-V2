@@ -45,6 +45,3 @@ aws:
 
 domain:
   http-name: ${DOMAIN_NAME}
-
-logging:
-  level.org.hibernate.SQL: trace
