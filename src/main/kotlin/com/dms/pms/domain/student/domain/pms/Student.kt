@@ -1,5 +1,6 @@
 package com.dms.pms.domain.student.domain.pms
 
+import com.dms.pms.domain.notification.domain.DeviceToken
 import javax.persistence.*
 
 @Entity
@@ -18,11 +19,19 @@ class Student (
     val studentId: String,
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    var users: MutableList<StudentUser> = mutableListOf()
+    var users: MutableList<StudentUser> = mutableListOf(),
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    var deviceTokens: MutableList<DeviceToken> = mutableListOf()
 ) {
 
     fun addUser(user: StudentUser) {
         users.add(user)
+    }
+
+    fun addDeviceToken(deviceToken: DeviceToken) {
+        this.deviceTokens.add(deviceToken)
+        deviceToken.student = this
     }
 
     override fun equals(other: Any?): Boolean {

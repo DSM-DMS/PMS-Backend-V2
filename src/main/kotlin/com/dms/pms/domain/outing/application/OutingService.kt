@@ -1,5 +1,6 @@
 package com.dms.pms.domain.outing.application
 
+import com.dms.pms.domain.notification.`interface`.NotificationFacade
 import com.dms.pms.domain.outing.domain.Outing
 import com.dms.pms.domain.outing.domain.repository.OutingRepository
 import com.dms.pms.domain.outing.presentation.dto.AddOutingDto
@@ -11,7 +12,8 @@ import java.time.LocalDate
 @Service
 class OutingService (
     private val outingRepository: OutingRepository,
-    private val studentFacade: StudentFacade
+    private val studentFacade: StudentFacade,
+    private val notificationFacade: NotificationFacade
 ) {
     fun getStudentOutings(number: Long, email: String): StudentOutingDto.Response {
         studentFacade.checkIsUserHasStudentAndGetId(email, number)
@@ -39,6 +41,7 @@ class OutingService (
             )
         )
 
-        val student = studentFacade.findStudentIdByNumber(request.number)
+        val student = studentFacade.findStudentByNumber(request.number)
+        notificationFacade.sendOutingMessageByStudent(student)
     }
 }

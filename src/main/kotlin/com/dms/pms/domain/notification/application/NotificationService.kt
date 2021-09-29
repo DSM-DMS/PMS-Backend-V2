@@ -1,38 +1,38 @@
 package com.dms.pms.domain.notification.application
 
 import com.dms.pms.domain.notification.delivery.dto.NotificationDto
+import com.dms.pms.domain.notification.delivery.dto.UnsubscribeDto
+import com.dms.pms.domain.notification.domain.DeviceToken
+import com.dms.pms.domain.notification.domain.repository.DeviceTokenRepository
 import com.dms.pms.domain.student.`interface`.StudentFacade
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import org.springframework.stereotype.Service
 
 @Service
-class NotificationService (
-    private val firebaseApp: FirebaseApp,
+class NotificationService(
+    private val deviceTokenRepository: DeviceTokenRepository,
     private val studentFacade: StudentFacade
 ) {
 
-    companion object {
-        private const val TOPIC_PREFIX = "OUTING-"
-    }
-
-    fun subscribe(token: NotificationDto.Request, email: String) {
+    fun subscribe(request: NotificationDto.Request, email: String) {
 
         val students = studentFacade.findAllStudentsByEmail(email)
 
         for (student in students) {
-            FirebaseMessaging.getInstance(firebaseApp)
-                .subscribeToTopicAsync(listOf(token.token), TOPIC_PREFIX + student.studentCode.toString())
+            val token = DeviceToken(token = request.token)
+            student.addDeviceToken(token)
+
+            deviceTokenRepository.save(token)
         }
     }
 
-    fun unsubscribe(token: NotificationDto.Request, email: String) {
+    fun unsubscribe(request: UnsubscribeDto.Request, email: String) {
 
         val students = studentFacade.findAllStudentsByEmail(email)
 
-        for (student in students) {
-            FirebaseMessaging.getInstance(firebaseApp)
-                .unsubscribeFromTopicAsync(listOf(), TOPIC_PREFIX + student.studentCode.toString())
-        }
+        for (student in students)
+            deviceTokenRepository.deleteAllByToken(request.token)
+
     }
 }

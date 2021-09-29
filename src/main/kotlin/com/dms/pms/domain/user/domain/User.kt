@@ -1,6 +1,5 @@
 package com.dms.pms.domain.user.domain
 
-import com.dms.pms.domain.notification.domain.NotificationToken
 import com.dms.pms.domain.student.domain.pms.StudentUser
 import com.dms.pms.domain.user.domain.types.AuthProvider
 import com.dms.pms.domain.user.domain.types.RoleType
@@ -28,10 +27,6 @@ class User (
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     var students: MutableList<StudentUser> = mutableListOf(),
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    var token: NotificationToken
 
 ) {
 
