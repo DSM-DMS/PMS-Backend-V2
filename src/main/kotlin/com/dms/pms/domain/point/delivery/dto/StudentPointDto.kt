@@ -1,25 +1,12 @@
 package com.dms.pms.domain.point.delivery.dto
 
+import com.dms.pms.domain.point.domain.dto.PointHistoryItem
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.time.LocalDate
+import java.io.Serializable
 
 class StudentPointDto {
     class Response (
         @JsonProperty("points")
-        val points: List<Point>
-    )
-
-    class Point (
-        @JsonProperty("reason")
-        val reason: String,
-
-        @JsonProperty("point")
-        val point: Int,
-
-        @JsonProperty("date")
-        val date: LocalDate,
-
-        @JsonProperty("type")
-        val type: Boolean
-    )
+        val points: List<PointHistoryItem>
+    ) : Serializable
 }

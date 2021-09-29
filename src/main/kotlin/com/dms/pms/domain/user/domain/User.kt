@@ -26,7 +26,8 @@ class User (
     var provider: AuthProvider,
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    var students: MutableList<StudentUser> = mutableListOf()
+    var students: MutableList<StudentUser> = mutableListOf(),
+
 ) {
 
     fun addStudent(student: StudentUser) {
@@ -35,6 +36,10 @@ class User (
 
     fun changePassword(password: String) {
         this.password = password
+    }
+
+    fun changeName(name: String) {
+        this.name = name
     }
 
     override fun equals(other: Any?): Boolean {

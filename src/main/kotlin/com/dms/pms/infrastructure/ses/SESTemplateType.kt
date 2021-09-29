@@ -4,4 +4,5 @@ enum class SESTemplateType (
     val templateName: String
 ) {
     REGISTER_VERIFY("verify-email"),
+    PASSWORD_RESET("reset-email")
 }

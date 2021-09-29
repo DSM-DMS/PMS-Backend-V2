@@ -13,9 +13,9 @@ class StudentListDto {
 
     class Student (
         @JsonProperty("student-number")
-        private val number: Long,
+        val number: Long,
 
         @JsonProperty("student-name")
-        private val name: String
+        val name: String
     )
 }

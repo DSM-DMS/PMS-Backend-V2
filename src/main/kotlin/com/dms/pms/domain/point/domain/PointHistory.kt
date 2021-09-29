@@ -4,7 +4,7 @@ import com.dms.pms.domain.student.domain.dms.Student
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import org.springframework.format.annotation.DateTimeFormat
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.persistence.*
 
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
@@ -24,7 +24,7 @@ class PointHistory (
 
     @Column(name = "point_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    var date: LocalDateTime
+    var date: LocalDate
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

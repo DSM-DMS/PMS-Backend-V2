@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/student/point")
+@RequestMapping("/user/student/point")
 class PointDelivery (
     private val pointService: PointService
 ) {
 
-    @Cacheable(value = ["student-point-history"], key = "#number", unless = "#result.shares < 5", cacheManager = "cacheManager")
+    @Cacheable(value = ["student-point-history"], key = "#number", unless = "#result == null", cacheManager = "cacheManager")
     @GetMapping("/{number}")
     fun getStudentPointHistory(@PathVariable("number") number: Long, @UserInfo email: String): StudentPointDto.Response {
         return pointService.getStudentPointHistory(number, email)

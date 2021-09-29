@@ -18,6 +18,10 @@ enum class ErrorCode (
     EXPIRED_TOKEN(401, "Token is expired"),
     INVALID_TOKEN(401, "token is not valid"),
     PASSWORD_NOT_MATCHED(401, "Password is not matched"),
+    TOKEN_NOT_FOUND(404, "Token is not found"),
+
+    // Message error codes
+    MESSAGE_SEND_FAILED(500, "Message send failed"),
 
     // Meal apply error codes
     MEAL_APPLY_NOT_FOUND(404, "Meal apply is not found"),

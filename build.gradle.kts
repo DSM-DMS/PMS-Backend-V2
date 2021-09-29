@@ -36,6 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.amazonaws:aws-java-sdk-ses:1.12.3")
+    implementation("com.google.firebase:firebase-admin:8.1.0")
     runtimeOnly("mysql:mysql-connector-java:8.0.26")
     runtimeOnly("org.postgresql:postgresql")
 
