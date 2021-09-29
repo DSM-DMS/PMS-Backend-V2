@@ -27,7 +27,7 @@ class RegisterServiceTest extends Specification {
         registerService.register(request)
 
         then:
-        1 * userRepository.findByEmail(request.email) >> null
+        1 * userRepository.findByIdOrNull(request.email) >> null
         1 * passwordEncoder.encode(request.password) >> request.password
         1 * unverifiedUserRepository.save(_) >> new UnVerifiedUser("test_token", request.email, request.password, request.name)
         1 * sesService.send(_, _, _)
@@ -44,7 +44,7 @@ class RegisterServiceTest extends Specification {
         registerService.register(request)
 
         then:
-        1 * userRepository.findByEmail(request.email) >> new User()
+        1 * userRepository.findByIdOrNull(request.email) >> new User()
         thrown(BusinessException)
     }
 }
