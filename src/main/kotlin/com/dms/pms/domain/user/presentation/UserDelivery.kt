@@ -16,7 +16,7 @@ class UserDelivery (
     @GetMapping
     fun getStudentList(@UserInfo email: String): StudentListDto.Response = userService.getStudentList(email)
 
-    @PutMapping("/user/name")
+    @PutMapping("/name")
     fun changeName(@RequestBody @Valid request: ChangeNameDto.Request, @UserInfo name: String) {
         userService.changeName(request, name)
     }
