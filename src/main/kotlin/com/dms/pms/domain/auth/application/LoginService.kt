@@ -88,7 +88,7 @@ class LoginService (
         val user = userFacade.getUserByEmail(resetPassword.email)
 
         val password = generateRandomPassword()
-        user.changePassword(password)
+        user.changePassword(passwordEncoder.encode(password))
 
         resetPasswordRepository.delete(resetPassword)
 
