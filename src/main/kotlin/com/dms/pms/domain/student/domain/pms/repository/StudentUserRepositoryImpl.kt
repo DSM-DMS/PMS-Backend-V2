@@ -27,7 +27,7 @@ class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::clas
         return from(student)
             .innerJoin(studentUser).on(student.studentCode.eq(studentUser.studentUserKey.studentCode))
             .innerJoin(user).on(studentUser.studentUserKey.email.eq(user.email))
-            .where(studentUser.studentUserKey.email.eq(email))
+            .where(user.email.eq(email))
             .orderBy(student.studentNumber.asc())
             .fetch()
     }
