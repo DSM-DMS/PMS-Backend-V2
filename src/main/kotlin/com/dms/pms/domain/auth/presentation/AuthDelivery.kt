@@ -5,6 +5,7 @@ import com.dms.pms.domain.auth.presentation.dto.ChangePasswordDto
 import com.dms.pms.domain.auth.presentation.dto.LoginDto
 import com.dms.pms.domain.auth.presentation.dto.ResetPasswordDto
 import com.dms.pms.global.security.UserInfo
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -17,6 +18,7 @@ class AuthDelivery (
     fun login(@RequestBody @Valid request: LoginDto.Request): LoginDto.Response = loginService.login(request)
 
     @PutMapping("/password")
+    @ResponseStatus(HttpStatus.CREATED)
     fun changePassword(@RequestBody @Valid request: ChangePasswordDto.Request, @UserInfo email: String) {
         loginService.changePassword(request, email)
     }

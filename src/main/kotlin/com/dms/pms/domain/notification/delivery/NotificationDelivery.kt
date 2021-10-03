@@ -4,6 +4,7 @@ import com.dms.pms.domain.notification.application.NotificationService
 import com.dms.pms.domain.notification.delivery.dto.NotificationDto
 import com.dms.pms.domain.notification.delivery.dto.UnsubscribeDto
 import com.dms.pms.global.security.UserInfo
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -13,6 +14,7 @@ class NotificationDelivery (
     private val notificationService: NotificationService
 ) {
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun subscribe(@RequestBody @Valid request: NotificationDto.Request, @UserInfo email: String) {
         notificationService.subscribe(request, email)
     }

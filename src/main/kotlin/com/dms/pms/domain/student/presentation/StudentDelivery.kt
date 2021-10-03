@@ -6,6 +6,7 @@ import com.dms.pms.domain.student.presentation.dto.DeleteStudentDto
 import com.dms.pms.domain.student.presentation.dto.StudentInfoDto
 import com.dms.pms.domain.user.domain.User
 import com.dms.pms.global.security.UserInfo
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -15,6 +16,7 @@ class StudentDelivery(
     private val studentService: StudentService
 ) {
     @PostMapping("/student")
+    @ResponseStatus(HttpStatus.CREATED)
     fun addStudent(@RequestBody @Valid request: AddStudentDto.Request, @UserInfo email: String): AddStudentDto.Response {
         return studentService.addStudent(request, email)
     }

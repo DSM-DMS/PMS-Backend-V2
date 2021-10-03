@@ -13,6 +13,7 @@ class DMSStudentRepositoryImpl : DMSQueryDslRepositorySupport(Student::class.jav
             .innerJoin(student.point, point)
             .innerJoin(student.stay, stay)
             .fetchJoin()
+            .where(student.id.eq(studentId))
             .fetchFirst()
 
         return student ?: throw StudentNotFoundException.EXCEPTION
