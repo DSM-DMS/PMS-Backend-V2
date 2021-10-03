@@ -25,8 +25,10 @@ class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::clas
 
     override fun findAllStudentsByEmail(email: String): List<Student> {
         return from(student)
-            .innerJoin(studentUser).on(student.studentCode.eq(studentUser.studentUserKey.studentCode))
-            .innerJoin(user).on(studentUser.studentUserKey.email.eq(user.email))
+            .where(studentUser.user.email.eq(email))
+            .innerJoin(studentUser.user, user)
+            .fetchJoin()
+            .innerJoin(studentUser.student, student)
             .orderBy(student.studentNumber.asc())
             .fetch()
     }
