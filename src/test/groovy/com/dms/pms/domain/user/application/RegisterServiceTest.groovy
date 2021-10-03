@@ -4,6 +4,8 @@ import com.dms.pms.domain.user.domain.User
 import com.dms.pms.domain.user.domain.cache.UnVerifiedUser
 import com.dms.pms.domain.user.domain.cache.UnVerifiedUserRepository
 import com.dms.pms.domain.user.domain.repository.UserRepository
+import com.dms.pms.domain.user.domain.types.AuthProvider
+import com.dms.pms.domain.user.domain.types.RoleType
 import com.dms.pms.domain.user.exception.UserAlreadyExistException
 import com.dms.pms.domain.user.presentation.dto.RegisterDto
 import com.dms.pms.global.error.BusinessException
@@ -27,11 +29,9 @@ class RegisterServiceTest extends Specification {
         registerService.register(request)
 
         then:
-        1 * userRepository.findByIdOrNull(request.email) >> null
-        1 * passwordEncoder.encode(request.password) >> request.password
-        1 * unverifiedUserRepository.save(_) >> new UnVerifiedUser("test_token", request.email, request.password, request.name)
-        1 * sesService.send(_, _, _)
+        1 * userRepository.findById(request.email) >> Optional.empty()
         passwordEncoder.encode(request.password) >> request.password
+        unverifiedUserRepository.save() >> new UnVerifiedUser("test_token", request.email, request.password, request.name)
 
         noExceptionThrown()
     }
@@ -44,7 +44,8 @@ class RegisterServiceTest extends Specification {
         registerService.register(request)
 
         then:
-        1 * userRepository.findByIdOrNull(request.email) >> new User()
-        thrown(BusinessException)
+        1 * userRepository.findById(request.email)
+                >> Optional.of(new User("asdf", "asdf", "asdf", RoleType.USER, AuthProvider.LOCAL, []))
+        thrown(UserAlreadyExistException)
     }
 }
