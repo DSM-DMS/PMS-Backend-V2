@@ -34,6 +34,7 @@ class SecurityConfig (
             .antMatchers("/auth/password/reset").permitAll()
             .antMatchers(HttpMethod.GET, "/user").hasAuthority(RoleType.USER.toString())
             .antMatchers(HttpMethod.POST, "/user").permitAll()
+            .antMatchers(HttpMethod.PUT, "/user/name").hasAuthority(RoleType.USER.toString())
             .antMatchers(HttpMethod.GET, "/user/verify").permitAll()
             .antMatchers(HttpMethod.POST, "/student/**").hasAuthority(RoleType.ADMIN.toString())
             .antMatchers("/user/student").hasAuthority(RoleType.USER.toString())
