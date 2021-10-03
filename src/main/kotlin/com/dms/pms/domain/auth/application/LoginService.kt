@@ -90,6 +90,8 @@ class LoginService (
         val password = generateRandomPassword()
         user.changePassword(password)
 
+        resetPasswordRepository.delete(resetPassword)
+
         return ResetPasswordTokenDto.Response(password)
     }
 }
