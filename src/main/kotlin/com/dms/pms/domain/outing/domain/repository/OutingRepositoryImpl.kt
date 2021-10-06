@@ -7,7 +7,7 @@ import com.dms.pms.global.querydsl.PMSQueryDslRepositorySupport
 class OutingRepositoryImpl : PMSQueryDslRepositorySupport(Outing::class.java), OutingRepositoryCustom {
     override fun getOutingsByStudentId(studentNumber: Long): List<Outing> {
         return from(outing)
-            .where(outing.studentNumber.eq(studentNumber))
+            .where(outing.number.eq(studentNumber))
             .orderBy(outing.date.desc())
             .fetch()
     }
