@@ -7,10 +7,6 @@ class AddOutingDto {
         val number: Long,
         val reason: String,
         val place: String,
-        var type: OutingType
-    ) {
-        fun setType(type: String) {
-            this.type = OutingType.valueOf(type.toUpperCase())
-        }
-    }
+        val type: OutingType
+    )
 }
