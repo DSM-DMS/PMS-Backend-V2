@@ -21,6 +21,7 @@ class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::clas
     override fun deleteStudent(email: String, number: Long) {
         delete(studentUser)
             .where(studentUser.studentUserKey.eq(StudentUserKey(email, number)))
+            .execute()
     }
 
     override fun findAllStudentsByEmail(email: String): List<Student> {
