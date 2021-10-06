@@ -7,6 +7,7 @@ import com.dms.pms.domain.student.domain.pms.StudentUser
 import com.dms.pms.domain.student.domain.types.StudentUserKey
 import com.dms.pms.domain.user.domain.QUser.user
 import com.dms.pms.global.querydsl.PMSQueryDslRepositorySupport
+import org.springframework.transaction.annotation.Transactional
 
 class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::class.java), StudentUserRepositoryCustom {
 
@@ -18,6 +19,7 @@ class StudentUserRepositoryImpl : PMSQueryDslRepositorySupport(StudentUser::clas
         return studentUser != null
     }
 
+    @Transactional
     override fun deleteStudent(email: String, number: Long) {
         delete(studentUser)
             .where(studentUser.studentUserKey.eq(StudentUserKey(email, number)))
