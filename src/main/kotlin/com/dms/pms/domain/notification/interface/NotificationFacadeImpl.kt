@@ -13,6 +13,7 @@ import com.google.firebase.messaging.Notification
 import mu.KLogging
 import org.springframework.stereotype.Component
 import java.time.LocalTime
+import java.time.ZoneId
 
 @Component
 class NotificationFacadeImpl (
@@ -28,7 +29,7 @@ class NotificationFacadeImpl (
         if (tokens.isEmpty())
             return
 
-        val time = LocalTime.now()
+        val time = LocalTime.now(ZoneId.of("Asia/Seoul"))
         val message = MulticastMessage.builder()
             .setNotification(
                 Notification.builder()
