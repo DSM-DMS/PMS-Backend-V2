@@ -47,10 +47,14 @@ class StudentService(
     }
 
     fun deleteStudent(request: DeleteStudentDto.Request, email: String): DeleteStudentDto.Response {
-        if (!studentUserRepository.isUserHasStudent(email, request.number))
+
+        val student = studentRepository.findByStudentNumber(request.number)
+            ?: throw StudentNotFoundException.EXCEPTION
+
+        if (!studentUserRepository.isUserHasStudent(email, student.studentCode))
             throw UserHasNotStudentException.EXCEPTION
 
-        studentUserRepository.deleteStudent(email, request.number)
+        studentUserRepository.deleteStudent(email, student.studentNumber)
 
         return DeleteStudentDto.Response("student is successfully deleted.")
     }
