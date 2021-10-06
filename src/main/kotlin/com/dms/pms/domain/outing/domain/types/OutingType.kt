@@ -6,6 +6,7 @@ enum class OutingType {
     NORMAL, DISEASE;
 
     companion object {
+        @JvmStatic
         @JsonCreator
         fun from(str: String): OutingType {
             return OutingType.valueOf(str.toUpperCase())
