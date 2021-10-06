@@ -54,7 +54,7 @@ class StudentService(
         if (!studentUserRepository.isUserHasStudent(email, student.studentCode))
             throw UserHasNotStudentException.EXCEPTION
 
-        studentUserRepository.deleteStudent(email, student.studentNumber)
+        studentUserRepository.deleteStudent(email, student.studentCode)
 
         return DeleteStudentDto.Response("student is successfully deleted.")
     }

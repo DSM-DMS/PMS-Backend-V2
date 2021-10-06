@@ -6,10 +6,7 @@ import com.google.api.core.ApiFutureCallback
 import com.google.api.core.ApiFutures
 import com.google.common.util.concurrent.ListeningExecutorService
 import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.BatchResponse
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.MulticastMessage
-import com.google.firebase.messaging.Notification
+import com.google.firebase.messaging.*
 import mu.KLogging
 import org.springframework.stereotype.Component
 import java.time.LocalTime
@@ -35,6 +32,15 @@ class NotificationFacadeImpl (
                 Notification.builder()
                     .setTitle("학생 외출 알림")
                     .setBody("${student.name}님이 ${time.hour}시 ${time.minute}분에 외출하였습니다.")
+                    .build()
+            )
+            .setAndroidConfig(
+                AndroidConfig.builder()
+                    .setNotification(
+                        AndroidNotification.builder()
+                            .setClickAction(".feature.mypage.ui.activity.OutingContentActivity")
+                            .build()
+                    )
                     .build()
             )
             .addAllTokens(tokens)
