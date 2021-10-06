@@ -23,6 +23,10 @@ class NotificationFacadeImpl (
 
     override fun sendOutingMessageByStudent(student: Student) {
         val tokens = student.deviceTokens.map { it.token }
+
+        if (tokens.isEmpty())
+            return
+
         val time = LocalTime.now()
         val message = MulticastMessage.builder()
             .putData("title", "학생 외출 알림")
@@ -31,6 +35,7 @@ class NotificationFacadeImpl (
             .build()
 
         val apiFuture = FirebaseMessaging.getInstance(firebaseApp).sendMulticastAsync(message)
+
         ApiFutures.addCallback(apiFuture, object: ApiFutureCallback<BatchResponse> {
             override fun onSuccess(result: BatchResponse) {
                 logger.info("Notification message was successfully sent: ${result.successCount} messages")
