@@ -31,9 +31,11 @@ class OutingService (
     }
 
     fun addOuting(request: AddOutingDto.Request) {
+        val student = studentFacade.findStudentByNumber(request.number)
+
         outingRepository.save(
             Outing(
-                studentNumber = request.number,
+                number = student.studentCode,
                 reason = request.reason,
                 place = request.place,
                 date = LocalDate.now(),
@@ -41,7 +43,6 @@ class OutingService (
             )
         )
 
-        val student = studentFacade.findStudentByNumber(request.number)
         notificationFacade.sendOutingMessageByStudent(student)
     }
 }

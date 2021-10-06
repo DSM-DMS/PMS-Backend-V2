@@ -12,7 +12,7 @@ class Outing (
     var id: Long? = null,
 
     @Column(name = "student_number")
-    var studentNumber: Long,
+    var number: Long,
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
