@@ -31,6 +31,7 @@ class SecurityConfig (
 
             .authorizeRequests()
             .antMatchers("/auth").permitAll()
+            .antMatchers("/auth/**").authenticated()
             .antMatchers("/auth/password/reset").permitAll()
             .antMatchers(HttpMethod.GET, "/user").hasAuthority(RoleType.USER.toString())
             .antMatchers(HttpMethod.POST, "/user").permitAll()
@@ -39,7 +40,6 @@ class SecurityConfig (
             .antMatchers(HttpMethod.POST, "/student/**").hasAuthority(RoleType.ADMIN.toString())
             .antMatchers("/user/student").hasAuthority(RoleType.USER.toString())
             .antMatchers("/user/student/**").hasAuthority(RoleType.USER.toString())
-            .antMatchers("/auth/**").permitAll()
             .antMatchers("/notification").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().denyAll()
