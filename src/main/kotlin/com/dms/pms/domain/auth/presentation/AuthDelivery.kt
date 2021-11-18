@@ -18,7 +18,6 @@ class AuthDelivery (
     fun login(@RequestBody @Valid request: LoginDto.Request): LoginDto.Response = loginService.login(request)
 
     @PutMapping("/password")
-    @ResponseStatus(HttpStatus.CREATED)
     fun changePassword(@RequestBody @Valid request: ChangePasswordDto.Request, @UserInfo email: String) {
         loginService.changePassword(request, email)
     }

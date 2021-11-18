@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 class ChangePasswordDto {
     class Request (
-        @JsonProperty("pre-password")
+        @JsonProperty("pre_password")
         val prePassword: String,
 
         @JsonProperty("password")
