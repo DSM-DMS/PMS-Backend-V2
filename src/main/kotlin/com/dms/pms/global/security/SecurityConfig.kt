@@ -2,6 +2,8 @@ package com.dms.pms.global.security
 
 import com.dms.pms.domain.user.domain.types.RoleType
 import com.dms.pms.global.error.HandleExceptionFilter
+import com.dms.pms.global.security.entrypoint.CustomAccessDeniedHandler
+import com.dms.pms.global.security.entrypoint.CustomAuthenticationEntryPoint
 import com.dms.pms.global.security.filter.JwtTokenFilter
 import com.dms.pms.global.security.filter.SecurityFilterConfigure
 import org.springframework.context.annotation.Bean
@@ -43,6 +45,8 @@ class SecurityConfig (
             .antMatchers("/notification").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().denyAll()
+            .and().exceptionHandling().authenticationEntryPoint(CustomAuthenticationEntryPoint())
+            .and().exceptionHandling().accessDeniedHandler(CustomAccessDeniedHandler())
             .and().apply(SecurityFilterConfigure(jwtTokenFilter, handleExceptionFilter))
     }
 
