@@ -15,6 +15,8 @@ enum class ErrorCode (
     USER_ALREADY_EXIST(409, "User is already exist"),
 
     // Auth error codes
+    AUTHENTICATION_NEED(401, "Authentication is required"),
+    INSUFFICIENT_PERMISSION(404, "Insufficient is required"),
     EXPIRED_TOKEN(401, "Token is expired"),
     INVALID_TOKEN(401, "token is not valid"),
     PASSWORD_NOT_MATCHED(401, "Password is not matched"),
