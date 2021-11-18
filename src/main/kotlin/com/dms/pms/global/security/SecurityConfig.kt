@@ -31,7 +31,7 @@ class SecurityConfig (
 
             .authorizeRequests()
             .antMatchers("/auth").permitAll()
-            .antMatchers("/auth/**").authenticated()
+            .antMatchers(HttpMethod.PUT, "/auth/password").authenticated()
             .antMatchers("/auth/password/reset").permitAll()
             .antMatchers(HttpMethod.GET, "/user").hasAuthority(RoleType.USER.toString())
             .antMatchers(HttpMethod.POST, "/user").permitAll()
