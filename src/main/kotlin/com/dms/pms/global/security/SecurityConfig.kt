@@ -43,7 +43,7 @@ class SecurityConfig (
             .antMatchers("/user/student").hasAuthority(RoleType.USER.toString())
             .antMatchers("/user/student/**").hasAuthority(RoleType.USER.toString())
             .antMatchers("/notification").permitAll()
-            .antMatchers("/exception").permitAll()
+            .antMatchers("/exception/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().denyAll()
             .and().exceptionHandling().authenticationEntryPoint(CustomAuthenticationEntryPoint())
