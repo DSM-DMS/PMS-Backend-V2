@@ -15,6 +15,7 @@ class WebMvcConfig (
         registry.addMapping("/**")
             .allowedOrigins("*")
             .allowedMethods("*")
+            .allowCredentials(false).maxAge(3600)
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
