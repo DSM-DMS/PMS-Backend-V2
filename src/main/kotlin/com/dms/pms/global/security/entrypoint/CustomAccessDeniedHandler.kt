@@ -1,5 +1,6 @@
 package com.dms.pms.global.security.entrypoint
 
+import com.dms.pms.global.security.exception.AuthEntryPointException
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.web.access.AccessDeniedHandler
 import javax.servlet.http.HttpServletRequest
@@ -11,6 +12,6 @@ class CustomAccessDeniedHandler : AccessDeniedHandler {
         response: HttpServletResponse,
         accessDeniedException: AccessDeniedException?
     ) {
-        response.sendRedirect("/exception/accessDenied")
+        throw AuthEntryPointException.EXCEPTION
     }
 }
