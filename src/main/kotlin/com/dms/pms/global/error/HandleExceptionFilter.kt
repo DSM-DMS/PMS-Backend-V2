@@ -26,16 +26,16 @@ class HandleExceptionFilter : OncePerRequestFilter() {
     ) {
         return try {
             filterChain.doFilter(request, response)
+        } catch (e: BusinessException) {
+            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by $e")
+            writeErrorCodes(e, response)
         } catch (e: Exception) {
 
             val exception = if (e is NestedServletException) e.cause else e
 
-            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by $exception")
+            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by ${exception?.message}")
 
             when (exception) {
-                // BusinessException
-                is BusinessException -> writeErrorCodes(exception, response)
-
                 // Exception for Method Arguments
                 is MethodArgumentNotValidException,
                 is MethodArgumentTypeMismatchException -> writeErrorCodes(MethodArgumentException.EXCEPTION, response)

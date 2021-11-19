@@ -47,7 +47,7 @@ class SecurityConfig (
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().denyAll()
             .and().exceptionHandling().authenticationEntryPoint(CustomAuthenticationEntryPoint())
-            .and().exceptionHandling().accessDeniedHandler(CustomAccessDeniedHandler())
+            .accessDeniedHandler(CustomAccessDeniedHandler())
             .and().apply(SecurityFilterConfigure(jwtTokenFilter, handleExceptionFilter))
     }
 
