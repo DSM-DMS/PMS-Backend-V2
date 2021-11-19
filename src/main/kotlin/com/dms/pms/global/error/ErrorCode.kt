@@ -5,6 +5,7 @@ enum class ErrorCode (
     val message: String
 ) {
     // Validation error codes
+    MESSAGE_NOT_READABLE(400, "Message is not readable. check your json data"),
     INVALID_INPUT_VALUE(400, "Method argument is not valid"),
     INVALID_INPUT_TYPE(400, "Method argument type is not valid"),
 
