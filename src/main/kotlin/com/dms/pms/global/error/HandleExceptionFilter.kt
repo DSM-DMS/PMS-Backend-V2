@@ -1,11 +1,9 @@
 package com.dms.pms.global.error
 
 import com.dms.pms.global.error.exception.InternalErrorException
-import com.dms.pms.global.error.exception.MessageNotReadableException
 import com.dms.pms.global.error.exception.MethodArgumentException
 import com.dms.pms.global.error.exception.NotFoundException
 import mu.KLogging
-import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.filter.OncePerRequestFilter
@@ -28,21 +26,19 @@ class HandleExceptionFilter : OncePerRequestFilter() {
     ) {
         return try {
             filterChain.doFilter(request, response)
-        } catch (e: BusinessException) {
-            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by $e")
-            writeErrorCodes(e, response)
         } catch (e: Exception) {
 
             val exception = if (e is NestedServletException) e.cause else e
 
-            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by ${exception?.cause}")
+            logger.error("[ERROR] IP ${request.remoteAddr} - Error occurred by $exception")
 
             when (exception) {
+                // BusinessException
+                is BusinessException -> writeErrorCodes(exception, response)
+
                 // Exception for Method Arguments
                 is MethodArgumentNotValidException,
                 is MethodArgumentTypeMismatchException -> writeErrorCodes(MethodArgumentException.EXCEPTION, response)
-
-                is HttpMessageNotReadableException -> writeErrorCodes(MessageNotReadableException.EXCEPTION, response)
 
                 // 404 Not Found
                 is NoHandlerFoundException -> writeErrorCodes(NotFoundException.EXCEPTION, response)
