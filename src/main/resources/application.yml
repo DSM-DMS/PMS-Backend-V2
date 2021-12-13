@@ -44,3 +44,6 @@ aws:
 
 domain:
   http-name: ${DOMAIN_NAME}
+  
+server:
+  shutdown: graceful
